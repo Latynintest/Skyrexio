@@ -3,3 +3,16 @@
 bin/
 __pycache__/
 *.pyc
+
+# Maven
+target/
+.mvn/
+mvnw
+mvnw.cmd
+
+# IDE
+.idea/
+*.iml
+.classpath
+.project
+.settings/

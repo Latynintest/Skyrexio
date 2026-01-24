@@ -16,3 +16,8 @@ mvnw.cmd
 .classpath
 .project
 .settings/
+
+# Allure
+allure-results/
+allure-report/
+allure/

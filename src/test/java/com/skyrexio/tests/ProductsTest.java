@@ -15,7 +15,6 @@ public class ProductsTest extends BaseTest {
         String item2 = "add-to-cart-sauce-labs-bolt-t-shirt";
         String item3 = "add-to-cart-sauce-labs-onesie";
 
-
         assertTrue(productsPage.isAddToCart(item1),
                 "Начальное состояние кнопки неверно должно быть 'Add to cart'");
 

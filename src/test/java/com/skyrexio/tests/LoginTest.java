@@ -1,8 +1,8 @@
 package com.skyrexio.tests;
 
 import static org.testng.Assert.*;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+import org.testng.annotations.DataProvider;
 
 public class LoginTest extends BaseTest {
     @Test(invocationCount = 1, priority = 2, enabled = true)
@@ -11,7 +11,7 @@ public class LoginTest extends BaseTest {
         loginPage.login("standard_user", "secret_sauce");
 
         assertTrue(productsPage.isTitleIsDisplayed(), "Заголовок не виден");
-        assertEquals(productsPage.getTitle(), "Products", "Не верный заголовок");
+        assertEquals(productsPage.checkTitleName(), "Products", "Не верный заголовок");
         assertTrue(productsPage.isCorrectURL(), "После логина должны быть на странице товаров");
     }
 

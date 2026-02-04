@@ -11,8 +11,9 @@ import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseTest {
     public WebDriver driver;
-    public LoginPage loginPage;
-    public ProductsPage productsPage;
+    LoginPage loginPage;
+    ProductsPage productsPage;
+    CartPage cartPage;
 
     @BeforeMethod
     public void setup() {
@@ -28,6 +29,7 @@ public class BaseTest {
         driver.get("https://www.saucedemo.com/");
         loginPage = new LoginPage(driver);
         productsPage = new ProductsPage(driver);
+        cartPage = new CartPage(driver);
     }
 
     @AfterMethod

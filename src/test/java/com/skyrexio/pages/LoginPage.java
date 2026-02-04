@@ -1,5 +1,6 @@
 package com.skyrexio.pages;
 
+import com.skyrexio.user.User;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -20,6 +21,12 @@ public class LoginPage extends BasePage {
     public void login(String user, String password) {
         driver.findElement(loginInput).sendKeys(user);
         driver.findElement(passwordInput).sendKeys(password);
+        driver.findElement(loginButton).click();
+    }
+
+    public void login(User user) {
+        driver.findElement(loginInput).sendKeys(user.getEmail());
+        driver.findElement(passwordInput).sendKeys(user.getPassword());
         driver.findElement(loginButton).click();
     }
 

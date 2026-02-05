@@ -1,6 +1,7 @@
 package com.skyrexio.pages;
 
 import com.skyrexio.user.User;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -14,26 +15,43 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
+    @Step("Открытие браузера")
     public void open() {
         driver.get(BASE_URL);
     }
 
+    @Step("Выполняем вход с данными: логин и пароль")
     public void login(String user, String password) {
-        driver.findElement(loginInput).sendKeys(user);
-        driver.findElement(passwordInput).sendKeys(password);
+        fillLoginField(user);
+        fillPasswordField(password);
         driver.findElement(loginButton).click();
     }
 
+    @Step("Выполняем вход пользователем: {user}")
     public void login(User user) {
-        driver.findElement(loginInput).sendKeys(user.getEmail());
-        driver.findElement(passwordInput).sendKeys(user.getPassword());
+        fillLoginField(user.getEmail());
+        fillPasswordField(user.getPassword());
         driver.findElement(loginButton).click();
     }
 
+    @Step("Вводим логин '{username}'")
+    private void fillLoginField(String username) {
+        driver.findElement(loginInput).clear();
+        driver.findElement(loginInput).sendKeys(username);
+    }
+
+    @Step("Вводим пароль '{password}'")
+    private void fillPasswordField(String password) {
+        driver.findElement(passwordInput).clear();
+        driver.findElement(passwordInput).sendKeys(password);
+    }
+
+    @Step("Проверяем, видимость уведомления об ошибке")
     public boolean isErrorDisplayed() {
         return driver.findElement(errorMsg).isDisplayed();
     }
 
+    @Step("Получаем текст сообщения об ошибке")
     public String getErrorText() {
         return driver.findElement(errorMsg).getText();
     }

@@ -1,0 +1,14 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Skyrexio" verbose="1">
+    <listeners>
+        <listener class-name="com.skyrexio.utils.TestListener" />
+    </listeners>
+
+    <test name="All Tests">
+        <classes>
+            <class name="com.skyrexio.tests.LoginTest" />
+            <class name="com.skyrexio.tests.ProductsTest" />
+            <class name="com.skyrexio.tests.CartTest" />
+        </classes>
+    </test>
+</suite>

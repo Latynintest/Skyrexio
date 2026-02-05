@@ -14,13 +14,14 @@
         <maven.compiler.source>25</maven.compiler.source>
         <maven.compiler.target>25</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <testng.version>7.8.0</testng.version>
+        <testng.version>7.9.0</testng.version>
         <selenium.version>4.15.0</selenium.version>
         <webdrivermanager.version>5.6.3</webdrivermanager.version>
         <allure.version>2.24.0</allure.version>
-        <aspectj.version>1.9.19</aspectj.version>
+        <aspectj.version>1.9.22</aspectj.version>
         <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
         <maven.surefire.plugin.version>3.2.5</maven.surefire.plugin.version>
+        <allure.maven.version>2.12.0</allure.maven.version>
     </properties>
 
     <dependencies>
@@ -60,12 +61,21 @@
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>2.0.9</version>
+            <version>2.0.17</version>
         </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <plugin>
+                <groupId>io.qameta.allure</groupId>
+                <artifactId>allure-maven</artifactId>
+                <version>${allure.maven.version}</version>
+                <configuration>
+                    <reportVersion>${allure.version}</reportVersion>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -77,18 +87,27 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.plugin.version}</version>
                 <configuration>
+                    <parallel>methods</parallel>
+                    <threadCount>3</threadCount>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>src/test/resources/testng.xml</suiteXmlFile>
                     </suiteXmlFiles>
                     <argLine>
                         -javaagent:"${settings.localRepository}/org/aspectj/aspectjweaver/${aspectj.version}/aspectjweaver-${aspectj.version}.jar"
+                        -Dorg.aspectj.weaver.showWeaveInfo=false
+                        -Daj.weaving.verbose=false
+                        -Daj.bin.dir=target/ajcore
                     </argLine>
-                    <systemProperties>
+                    <systemPropertyVariables>
                         <property>
                             <name>allure.results.directory</name>
                             <value>${project.build.directory}/allure-results</value>
                         </property>
-                    </systemProperties>
+                        <property>
+                            <name>aspectj.weaver.options</name>
+                            <value>-XnoInline</value>
+                        </property>
+                    </systemPropertyVariables>
                 </configuration>
             </plugin>
         </plugins>

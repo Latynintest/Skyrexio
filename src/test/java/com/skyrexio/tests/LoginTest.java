@@ -2,13 +2,16 @@ package com.skyrexio.tests;
 
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
+import com.skyrexio.user.UserFactory;
 import org.testng.annotations.DataProvider;
 
 public class LoginTest extends BaseTest {
     @Test(invocationCount = 1, priority = 2, enabled = true)
     public void correctLogin() {
+        System.out
+                .println("LoginTest.Correct!!!!  in thread: " + Thread.currentThread().threadId());
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(UserFactory.withAdminPermission());
 
         assertTrue(productsPage.isTitleIsDisplayed(), "Заголовок не виден");
         assertEquals(productsPage.checkTitleName(), "Products", "Не верный заголовок");
@@ -28,8 +31,10 @@ public class LoginTest extends BaseTest {
 
     @Test(dataProvider = "incorrectLoginData",
             description = "Тест проверяет авторизацию заблокированного пользователя",
-            invocationCount = 2)
+            invocationCount = 1)
     public void incorrectLogin(String user, String password, String errorMsg) {
+        System.out.println(
+                "LoginTest.Incorrect!!!!  in thread: " + Thread.currentThread().threadId());
         loginPage.open();
         loginPage.login(user, password);
 

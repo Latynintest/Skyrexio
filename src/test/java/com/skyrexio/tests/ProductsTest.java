@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
+import com.skyrexio.user.UserFactory;
 
 public class ProductsTest extends BaseTest {
     List<String> goodsList = new ArrayList<>(List.of("add-to-cart-sauce-labs-backpack",
@@ -11,8 +12,10 @@ public class ProductsTest extends BaseTest {
 
     @Test
     public void checkGoodsAdded() {
+        System.out.println(
+                "ProductsTest.Correct!!!!  in thread: " + Thread.currentThread().threadId());
         loginPage.open();
-        loginPage.login("standard_user", "secret_sauce");
+        loginPage.login(UserFactory.withAdminPermission());
         assertTrue(productsPage.isTitleIsDisplayed());
         assertEquals(productsPage.checkTitleName(), "Products");
 

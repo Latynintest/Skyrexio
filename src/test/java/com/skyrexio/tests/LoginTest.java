@@ -11,7 +11,6 @@ import org.testng.annotations.DataProvider;
 @Owner("Sergey Latynin")
 public class LoginTest extends BaseTest {
 
-        @Epic("Авторизация")
         @Feature("Успешная авторизация")
         @Story("Пользователь может успешно авторизоваться с корректными данными")
         @Severity(SeverityLevel.BLOCKER)
@@ -41,7 +40,6 @@ public class LoginTest extends BaseTest {
                                                 "Epic sadface: Username and password do not match any user in this service"},};
         }
 
-        @Epic("Авторизация")
         @Feature("Неуспешная авторизация")
         @Story("Пользователь не может авторизоваться с некорректными данными")
         @Severity(SeverityLevel.CRITICAL)

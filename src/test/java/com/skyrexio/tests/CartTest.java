@@ -4,14 +4,16 @@ import io.qameta.allure.*;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 import com.skyrexio.user.UserFactory;
-import io.qameta.allure.Description;
+import com.skyrexio.user.TestDataProvider;
+import static com.skyrexio.enums.TitleNaming.CART; 
+import static com.skyrexio.enums.TitleNaming.PRODUCTS; 
 
 @Epic("Корзина")
 @Feature("Работа с корзиной")
 @Owner("Sergey Latynin")
 public class CartTest extends BaseTest {
-    final String goodsName = "add-to-cart-sauce-labs-onesie";
-    final String expectedProductName = "Sauce Labs Onesie";
+    private static final String GOODS_NAME = "add-to-cart-" + TestDataProvider.ONESIE;
+    private static final String EXPECTED_PRODUCT_NAME = TestDataProvider.ONESIE_NAME;
 
     @Story("Пользователь может добавить товар в корзину и увидеть его там")
     @Severity(SeverityLevel.CRITICAL)
@@ -23,12 +25,12 @@ public class CartTest extends BaseTest {
         loginPage.open();
         loginPage.login(UserFactory.withAdminPermission());
         assertTrue(productsPage.isTitleIsDisplayed());
-        assertEquals(productsPage.checkTitleName(), "Products");
-        productsPage.addGoodsToCart(goodsName);
+        assertEquals(productsPage.checkTitleName(), PRODUCTS.getDisplayName());
+        productsPage.addGoodsToCart(GOODS_NAME);
         productsPage.switchToCart();
-        assertEquals(cartPage.checkTitleName(), "Your Cart");
+        assertEquals(cartPage.checkTitleName(), CART.getDisplayName());
         assertFalse(cartPage.getProductsNames().isEmpty());
         assertEquals(cartPage.getProductsNames().size(), 1);
-        assertTrue(cartPage.getProductsNames().contains(expectedProductName));
+        assertTrue(cartPage.getProductsNames().contains(EXPECTED_PRODUCT_NAME));
     }
 }

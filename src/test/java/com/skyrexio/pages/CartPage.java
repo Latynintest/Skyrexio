@@ -2,10 +2,10 @@ package com.skyrexio.pages;
 
 import java.util.List;
 import java.util.ArrayList;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import io.qameta.allure.Step;
 
 public class CartPage extends BasePage {
     By product = By.cssSelector(DATA_TEST_PATTERN.formatted("inventory-item-name"));

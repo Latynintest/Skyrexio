@@ -1,9 +1,13 @@
 package com.skyrexio.pages;
 
 import java.time.Duration;
+import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import com.skyrexio.utils.PropertyReader;
+import com.skyrexio.utils.TestListener;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public abstract class BasePage {
@@ -21,5 +25,27 @@ public abstract class BasePage {
 
     public String checkTitleName() {
         return driver.findElement(title).getText();
+    }
+
+    public WebElement findElement(By locator) {
+        WebElement element = driver.findElement(locator);
+        highlightElement(element);
+        return element;
+    }
+
+    private void highlightElement(WebElement element) {
+        JavascriptExecutor javascriptExecutor = (JavascriptExecutor) driver;
+        javascriptExecutor.executeScript("arguments[0].style.border='3px solid red'", element);
+        TestListener.takeScreenshot(driver);
+    }
+
+    @Step("Проверить наличие заголовка на странице")
+    public boolean checkDisplayingTitle() {
+        return findElement(title).isDisplayed();
+    }
+
+    @Step("Проверить текст заголовка страницы")
+    public String checkTitleText() {
+        return findElement(title).getText();
     }
 }

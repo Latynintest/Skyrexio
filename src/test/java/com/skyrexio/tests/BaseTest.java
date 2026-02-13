@@ -7,19 +7,18 @@ import io.qameta.allure.Attachment;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.OutputType;
 import org.testng.annotations.Optional;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Parameters;
 import com.skyrexio.utils.PropertyReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.openqa.selenium.TakesScreenshot;
-import io.qameta.allure.testng.AllureTestNg;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
-@Listeners({AllureTestNg.class})
+
 public class BaseTest {
     public WebDriver driver;
     CartPage cartPage;
@@ -43,7 +42,8 @@ public class BaseTest {
             driver = new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
-            driver = new FirefoxDriver();
+            FirefoxOptions options = new FirefoxOptions();
+            driver = new FirefoxDriver(options);
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
         context.setAttribute("driver", driver);

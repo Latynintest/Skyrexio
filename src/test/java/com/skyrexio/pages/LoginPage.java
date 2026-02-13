@@ -27,7 +27,7 @@ public class LoginPage extends BasePage {
         driver.findElement(loginButton).click();
     }
 
-    @Step("Выполняем вход пользователем: {user}")
+    @Step("Выполняем вход пользователем: {user.email}")
     public void login(User user) {
         fillLoginField(user.getEmail());
         fillPasswordField(user.getPassword());

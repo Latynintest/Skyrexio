@@ -1,18 +1,15 @@
 package com.skyrexio.tests;
-
-import java.util.List;
 import io.qameta.allure.*;
-import java.util.ArrayList;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 import com.skyrexio.user.UserFactory;
+import com.skyrexio.user.TestDataProvider;
+import static com.skyrexio.enums.TitleNaming.PRODUCTS; 
 
 @Epic("Товары")
 @Feature("Работа с товарами")
 @Owner("Sergey Latynin")
 public class ProductsTest extends BaseTest {
-        List<String> goodsList = new ArrayList<>(List.of("add-to-cart-sauce-labs-backpack",
-                        "add-to-cart-sauce-labs-bolt-t-shirt", "add-to-cart-sauce-labs-onesie"));
 
         @Story("Пользователь может добавлять товары в корзину")
         @Severity(SeverityLevel.CRITICAL)
@@ -25,7 +22,9 @@ public class ProductsTest extends BaseTest {
                 loginPage.open();
                 loginPage.login(UserFactory.withAdminPermission());
                 assertTrue(productsPage.isTitleIsDisplayed());
-                assertEquals(productsPage.checkTitleName(), "Products");
+                assertEquals(productsPage.checkTitleName(), PRODUCTS.getDisplayName());
+
+                String[] goodsList = TestDataProvider.getMultipleProducts();
 
                 for (String item : goodsList) {
                         assertTrue(productsPage.isAddToCart(item),

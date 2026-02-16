@@ -4,7 +4,8 @@ import io.qameta.allure.*;
 import static org.testng.Assert.*;
 import org.testng.annotations.Test;
 import com.skyrexio.user.UserFactory;
-import org.testng.annotations.DataProvider;
+import com.skyrexio.user.TestDataProvider;
+import static com.skyrexio.enums.TitleNaming.PRODUCTS;;
 
 @Epic("Авторизация")
 @Feature("Функционал входа в систему")
@@ -25,19 +26,10 @@ public class LoginTest extends BaseTest {
                 loginPage.login(UserFactory.withAdminPermission());
 
                 assertTrue(productsPage.isTitleIsDisplayed(), "Заголовок не виден");
-                assertEquals(productsPage.checkTitleName(), "Products", "Не верный заголовок");
+                assertEquals(productsPage.checkTitleName(), PRODUCTS.getDisplayName(),
+                                "Не верный заголовок");
                 assertTrue(productsPage.isCorrectURL(),
                                 "После логина должны быть на странице товаров");
-        }
-
-        @DataProvider(name = "incorrectLoginData")
-        public Object[][] loginData() {
-                return new Object[][] {{"locked_out_user", "secret_sauce",
-                                "Epic sadface: Sorry, this user has been locked out."},
-                                {"", "secret_sauce", "Epic sadface: Username is required"},
-                                {"standard_user", "", "Epic sadface: Password is required"},
-                                {"Standard_user", "secret_sauce",
-                                                "Epic sadface: Username and password do not match any user in this service"},};
         }
 
         @Feature("Неуспешная авторизация")
@@ -47,8 +39,7 @@ public class LoginTest extends BaseTest {
         @TmsLink("skyrexio ТС-2")
         @Issue("BUG")
         @Description("Тест проверяет авторизацию с некорректными данными и отображение ошибок")
-        @Test(dataProvider = "incorrectLoginData",
-                        description = "Тест проверяет авторизацию заблокированного пользователя",
+        @Test(dataProvider = "incorrectLoginData", dataProviderClass = TestDataProvider.class,
                         invocationCount = 1)
         public void incorrectLogin(String user, String password, String errorMsg) {
                 System.out.println("LoginTest.Incorrect!!!!  in thread: "

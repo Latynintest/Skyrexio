@@ -1,14 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="skyrexio" parallel="classes" thread-count="2">
-
     <test name="All tests">
         <classes>
-            <class name="tests.LoginTest"/>
-            <class name="tests.ProductsTest"/>
-            <class name="tests.CartTest"/>
+            <class name="com.skyrexio.tests.LoginTest" />
+            <class name="com.skyrexio.tests.ProductsTest" />
+            <class name="com.skyrexio.tests.CartTest" />
         </classes>
-
-    </test> <!-- Test -->
-
+    </test>
 </suite>

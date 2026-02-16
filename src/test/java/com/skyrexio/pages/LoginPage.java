@@ -1,8 +1,8 @@
 package com.skyrexio.pages;
 
-import com.skyrexio.user.User;
 import io.qameta.allure.Step;
 import org.openqa.selenium.By;
+import com.skyrexio.user.User;
 import org.openqa.selenium.WebDriver;
 
 public class LoginPage extends BasePage {
@@ -27,20 +27,18 @@ public class LoginPage extends BasePage {
         driver.findElement(loginButton).click();
     }
 
-    @Step("Выполняем вход пользователем: {user}")
+    @Step("Выполняем вход пользователем: {user.email}")
     public void login(User user) {
         fillLoginField(user.getEmail());
         fillPasswordField(user.getPassword());
         driver.findElement(loginButton).click();
     }
 
-    @Step("Вводим логин '{username}'")
     private void fillLoginField(String username) {
         driver.findElement(loginInput).clear();
         driver.findElement(loginInput).sendKeys(username);
     }
 
-    @Step("Вводим пароль '{password}'")
     private void fillPasswordField(String password) {
         driver.findElement(passwordInput).clear();
         driver.findElement(passwordInput).sendKeys(password);

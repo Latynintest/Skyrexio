@@ -7,19 +7,18 @@ import io.qameta.allure.Attachment;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.OutputType;
 import org.testng.annotations.Optional;
-import org.testng.annotations.Listeners;
 import org.testng.annotations.Parameters;
 import com.skyrexio.utils.PropertyReader;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.TakesScreenshot;
-import io.qameta.allure.testng.AllureTestNg;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.firefox.FirefoxOptions;
 
-@Listeners({AllureTestNg.class})
+
 public class BaseTest {
     public WebDriver driver;
     CartPage cartPage;
@@ -41,9 +40,10 @@ public class BaseTest {
              * options.addArguments("--window-size=1920,1080"); options.addArguments("headless");
              */
             driver = new ChromeDriver(options);
-        } else if (browser.equalsIgnoreCase("edge")) {
-            WebDriverManager.edgedriver().setup();
-            driver = new EdgeDriver();
+        } else if (browser.equalsIgnoreCase("firefox")) {
+            WebDriverManager.firefoxdriver().setup();
+            FirefoxOptions options = new FirefoxOptions();
+            driver = new FirefoxDriver(options);
         }
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(6));
         context.setAttribute("driver", driver);
@@ -59,8 +59,18 @@ public class BaseTest {
         driver.quit();
     }
 
-    @Attachment(value = "screenshot", type = "image/png")
-    public byte[] takesScreenshot(String description) {
+    @Attachment(value = "Screenshot: {0}", type = "image/png")
+    public byte[] takeScreenshot(String description) {
         return ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+    }
+
+    @Attachment(value = "{0}", type = "text/plain")
+    public String saveTextLog(String message) {
+        return message;
+    }
+
+    @Attachment(value = "Page Source", type = "text/html")
+    public String savePageSource() {
+        return driver.getPageSource();
     }
 }

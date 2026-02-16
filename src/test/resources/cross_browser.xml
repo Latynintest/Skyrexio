@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite thread-count="2" name="skyrexio" parallel="classes">
+<suite thread-count="2" name="CrossBrowserSuite" parallel="none">
 
-    <test name="Chrome">
+    <test name="ChromeTests">
+        <parameter name="browser" value="chrome" />
         <classes>
-            <class name="tests.LoginTest"/>
-            <parameter name="browser" value="chrome"></parameter>
-        </classes>
-    </test> <!-- Test -->
-
-    <test name="Edge">
-        <classes>
-            <class name="tests.ProductsTest"/>
-            <class name="tests.CartTest"/>
-            <parameter name="browser" value="edge"></parameter>
+            <class name="com.skyrexio.tests.LoginTest" />
+            <class name="com.skyrexio.tests.ProductsTest" />
+            <class name="com.skyrexio.tests.CartTest" />
         </classes>
     </test>
-    <!-- Test -->
+
+    <test name="FirefoxTests">
+        <parameter name="browser" value="firefox" />
+        <classes>
+            <class name="com.skyrexio.tests.LoginTest" />
+            <class name="com.skyrexio.tests.ProductsTest" />
+            <class name="com.skyrexio.tests.CartTest" />
+        </classes>
+    </test>
 </suite>
